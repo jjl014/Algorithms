@@ -97,7 +97,10 @@ class DynamicProgramming
   # Helper method for bottom-up implementation
   def knapsack_table(weights, values, capacity)
     matrix = Array.new(values.length) { Array.new(capacity + 1, 0) }
-    (0...values.length).each do |i|
+    (0..capacity).each do |cap|
+      matrix[0][cap] = cap < weights[0] ? 0 : values[0]
+    end
+    (1...values.length).each do |i|
       (0..capacity).each do |cap_i|
         if cap_i < weights[i]
           matrix[i][cap_i] = matrix[i - 1][cap_i]
