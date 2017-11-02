@@ -1,0 +1,4 @@
+* BONUS:
+  * General oarameter estimation discussion
+  * Derivation of simple least squares formula, coefficient of
+    correlation.
