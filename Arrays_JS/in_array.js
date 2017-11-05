@@ -11,4 +11,13 @@ function inArray(array1,array2){
   return new_arr.sort();
 }
 
+function inArray2(arr1, arr2) {
+  return arr1.filter(function(needle) {
+    return arr2.some(function(haystack) {
+      return haystack.indexOf(needle) > -1;
+    });
+  }).sort();
+}
+
 console.log(inArray(["arr", "mar", "it"], ["carr", "lit", "zit", "two"]));
+console.log(inArray2(["arr", "mar", "it"], ["carr", "lit", "zit", "two"]));
