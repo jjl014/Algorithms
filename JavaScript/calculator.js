@@ -1,42 +1,43 @@
-const a = "23+5/6*3+15";
+const solveMathExpr = (expr) => {
+  let nums = expr.split(/[\+\/\*\-]/);
+  let ops = expr.split(/\d+/).filter(el => el !== "");
+  const stack1 = [];
+  const stack2 = [];
 
-const numbers = a.split(/[\+\-\*\/]/);
-const ops = a.split(/(\d+)/).filter((el) => el !== "");
+  const precedence = (op1, op2) => {
+    if (( op1 === "/" || op1 === "*") && (op2 === "+" || op2 === "-")) {
+      return false;
+    }
+    return true;
+  };
 
-// console.log(/\d+/.test(ops[0]));
-
-const stack1 = [];
-const stack2 = [];
-
-const precedence = (op1, op2) => {
-  if ( (op1 == "*" || op1 === "/") && (op2 === "+" || op2 === "-")) {
-    return false;
+  while (ops.length > 0) {
+    let num = nums.shift();
+    let op = ops.shift();
+    stack1.push(num);
+    if (stack2.length !== 0 && precedence(op, stack2[stack2.length - 1])) {
+      let num2 = stack1.pop();
+      let num1 = stack1.pop();
+      let currentOp = stack2.pop();
+      stack1.push(eval(num1 + currentOp + num2));
+      stack2.push(op);
+    } else {
+      stack2.push(op);
+    }
   }
-  return true;
-};
 
-for (let i = 0; i < ops.length; i++) {
-  console.log(`current: ${ops[i]}`);
-  if (/\d+/.test(ops[i])) {
-    stack1.push(ops[i]);
-  } else if (stack2.length !== 0 && precedence(ops[i], stack2[stack2.length - 1])){
-    let val2 = stack1.pop();
-    let val1 = stack1.pop();
-    let op = stack2.pop();
-    stack1.push(eval(val1 + op + val2));
-    stack2.push(ops[i]);
-  } else {
-    stack2.push(ops[i]);
+  nums.forEach((el) => {
+    stack1.push(el);
+  })
+
+  while (stack2.length !== 0) {
+    let num2 = stack1.pop();
+    let num1 = stack1.pop();
+    let currentOp = stack2.pop();
+    stack1.push(eval(num1 + currentOp + num2));
   }
-  console.log(`-----stack1: ${stack1}`);
-  console.log(`-----stack2: ${stack2}`);
+
+  return stack1[0];
 }
 
-while (stack2.length > 0) {
-  let val2 = stack1.pop();
-  let val1 = stack1.pop();
-  let op = stack2.pop();
-  stack1.push(eval(val1 + op + val2));
-}
-
-console.log(stack1[0]);
+console.log(solveMathExpr("23+5/6*3+15"));
