@@ -7,26 +7,26 @@
 // # time: O(n), space: O(1)
 function isShuffle(str1, str2, str3) {
   if ((str1.length + str2.length) !== str3.length) {
-    return false
+    return false;
   }
 
   let idx1 = 0, idx2 = 0, idx3 = 0;
 
   while (idx3 < str3.length) {
-    if (str1[idx1] == str3[idx3]) {
-      idx1 += 1
-      idx3 += 1
+    if (str1[idx1] === str3[idx3]) {
+      idx1 += 1;
+      idx3 += 1;
     }
-    else if (str2[idx2] == str3[idx3]) {
-      idx2 += 1
-      idx3 += 1
+    else if (str2[idx2] === str3[idx3]) {
+      idx2 += 1;
+      idx3 += 1;
     }
     else {
-      return false
+      return false;
     }
   }
 
-  return true
+  return true;
 }
 
 console.log(isShuffle("hello", "abcde", "habelcldoe"));
